@@ -30,6 +30,12 @@ const Signup = ({registerUser, auth}) => {
     return (
         <form className="container mt-5">
             <div className="mb-3">
+                <h4 className="display-5 lead text-center text-uppercase">Signup</h4>
+                <p className="lead text-center text-uppercase">
+                    Your Information is Secured with us
+                </p>
+            </div>
+            <div className="mb-3">
                 <input value={name} onChange={e => setName(e.target.value)} type="text" className="form-control" placeholder="Enter Name" />
             </div>
             <div className="mb-3">

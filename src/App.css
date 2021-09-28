@@ -16,3 +16,26 @@
 a {
   color: var(--linkColor);
 }
+.home-container {
+  margin-top: 10%;
+}
+.contact-image-section {
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+  margin-bottom: 2%;
+}
+.contact-image-section .contact-image {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 0.75rem #1B98F5);
+}
+.contact-text-section {
+  width: 100%;
+}
+@media screen and (max-width: 768px) {
+  .contact-image-section {
+    width: 100%;
+    margin-bottom: 2%;
+  }
+}

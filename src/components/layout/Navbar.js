@@ -1,18 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { logout } from '../../actions/authAction';
 
 const Navbar = ({title, logout, auth: {isAuthenticated, user}}) => {
+    const [clicked, setClicked] = useState(false);
     let history = useHistory();
+
     const handleLogout = () => {
         logout();
     }
     const AuthLink = (
         <Fragment>
             <li className="nav-item">
-                <h1 className="display-5">Hello {user && user.name}</h1>
+                <h4 className="lead fs-3 text-white pe-5">Hello {user && user.name}</h4>
             </li>
             <li className="nav-item">
                 <button className="btn btn-danger" onClick={() => {
@@ -25,10 +27,10 @@ const Navbar = ({title, logout, auth: {isAuthenticated, user}}) => {
     const GuestLink = (
         <Fragment>
             <li className="nav-item">
-                <Link className="nav-link" to="/Signin">Signin</Link>
+                <Link className="nav-link text-white" to="/Signin">Signin</Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/Signup">Signup</Link>
+                <Link className="nav-link text-white" to="/Signup">Signup</Link>
             </li>
         </Fragment>
     );
@@ -36,8 +38,10 @@ const Navbar = ({title, logout, auth: {isAuthenticated, user}}) => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container">
                 <Link className="navbar-brand" to={isAuthenticated ? "/Dashboard" : "/"}>{title}</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                <button onClick={() => setClicked(!clicked)} className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    {
+                        !clicked ? <span className="fas fa-bars"></span> : <span className="fas fa-times"></span>
+                    }
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

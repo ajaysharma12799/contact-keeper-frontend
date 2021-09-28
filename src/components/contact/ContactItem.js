@@ -20,11 +20,11 @@ const ContactItem = ({contact, deleteContact, clearCurrent, setCurrent}) => {
                 <span className={type === "Professional" ? "badge bg-success btn btn-success" : "badge btn btn-warning"}>{type}</span>
             </div>
             <div className="card-body d-flex justify-content-between">
-                <button className="btn btn-dark" onClick={() => {
+                <button className="btn btn-dark btn-lg" onClick={() => {
                     console.log("clicked")
                     setCurrent(contact);
                 }}>Edit</button>
-                <button className="btn btn-danger" onClick={() => { 
+                <button className="btn btn-danger btn-lg" onClick={() => { 
                     deleteContact(_id);
                     clearCurrent();
                 }}>Delete</button>
