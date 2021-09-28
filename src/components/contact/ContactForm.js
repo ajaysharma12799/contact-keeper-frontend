@@ -1,19 +1,46 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { addContact } from '../../actions/contactAction';
+import { addContact, updateContact } from '../../actions/contactAction';
 
-const ContactForm = ({addContact}) => {
+const ContactForm = ({addContact, updateContact, contact: {current}}) => {
+    const [id, setID] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [type, setType] = useState("Personal");
 
+
+    useEffect(() => {
+        if(current !== null) {
+            setName(current.name);
+            setEmail(current.email);
+            setPhone(current.phone);
+            setType(current.type);
+            setID(current._id);
+        }
+        else {
+            setName("");
+            setEmail("");
+            setPhone("");
+            setType("");
+            setID("");
+        }
+    }, [current]);
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({name, email, phone, type});
-        addContact({name, email, phone, type});
-        alert("Contact Added Successfully");
+        if(current === null) {
+            console.log({name, email, phone, type});
+            addContact({name, email, phone, type});
+            alert("Contact Added Successfully");
+        }
+        else {
+            console.log({name, email, phone, type});
+            updateContact({name, email, phone, type, id});
+            console.log({name, email, phone, type, id});
+            alert("Contact Updated Successfully");
+        }
     }
 
     return (
@@ -41,13 +68,21 @@ const ContactForm = ({addContact}) => {
                     <label className="form-check-label" htmlFor="professional">Professional</label>
                 </div>
             </div>
-            <button type="submit" onClick={e => handleSubmit(e)} className="btn btn-primary w-100">Add Contact</button>
+            <button type="submit" onClick={e => handleSubmit(e)} className="btn btn-primary w-100">
+                {current === null ? "Add Contact" : "Update Contact"}
+            </button>
         </form>
     )
 }
 
 ContactForm.propTypes = {
     addContact: PropTypes.func.isRequired,
+    updateContact: PropTypes.func.isRequired,
+    contact: PropTypes.object.isRequired,
 }
 
-export default connect(null, {addContact})(ContactForm)
+const mapStateToProp = (state) => ({
+    contact: state.contact
+})
+
+export default connect(mapStateToProp, {addContact, updateContact})(ContactForm)

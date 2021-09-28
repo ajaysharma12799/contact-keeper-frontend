@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authAction';
 
 const Signin = ({loginUser, auth}) => {
-    const [email, setEmail] = useState("a@gmail.com");
-    const [password, setPassword] = useState("123456");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();

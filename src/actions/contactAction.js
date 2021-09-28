@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API } from '../API';
-import {GET_ALL_CONTACTS, CONTACT_ERROR, ADD_CONTACT, DELETE_CONTACT} from "./types";
+import {GET_ALL_CONTACTS, CONTACT_ERROR, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT} from "./types";
 
 export const getAllContacts = () => async (dispatch) => {
     try {
@@ -44,7 +44,18 @@ export const addContact = (contact) => async (dispatch) => {
 
 export const updateContact = (contact) => async (dispatch) => {
     try {
-        
+        console.log(contact.id);
+        const response = await axios.put(`${API}/contacts/${contact.id}`,contact, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        const data = response.data;
+        dispatch({
+            type: UPDATE_CONTACT,
+            payload: data
+        })
+        dispatch(getAllContacts());
     } catch (error) {
         console.log(error);
         dispatch({
@@ -70,4 +81,17 @@ export const deleteContact = (id) => async (dispatch) => {
             payload: error
         })
     }
+}
+
+export const setCurrent = (contact) => async (dispatch) => {
+    dispatch({
+        type: SET_CURRENT,
+        payload: contact
+    })
+}
+
+export const clearCurrent = () => async (dispatch) => {
+    dispatch({
+        type: CLEAR_CURRENT
+    })
 }

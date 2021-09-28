@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import { deleteContact } from '../../actions/contactAction';
-import { Link } from 'react-router-dom';
+import { clearCurrent, deleteContact, setCurrent } from '../../actions/contactAction';
 
-const ContactItem = ({contact, deleteContact}) => {
+const ContactItem = ({contact, deleteContact, clearCurrent, setCurrent}) => {
     const {name, email, phone, type, _id} = contact
     return (
         <div className={type === "Professional" ? "card mb-2 bg-warning " : "card mb-2 bg-primary"}>
@@ -21,8 +20,14 @@ const ContactItem = ({contact, deleteContact}) => {
                 <span className={type === "Professional" ? "badge bg-success btn btn-success" : "badge btn btn-warning"}>{type}</span>
             </div>
             <div className="card-body d-flex justify-content-between">
-                <Link to="/UpdateContact" className="btn btn-dark">Edit</Link>
-                <button className="btn btn-danger" onClick={() => { deleteContact(_id) }}>Delete</button>
+                <button className="btn btn-dark" onClick={() => {
+                    console.log("clicked")
+                    setCurrent(contact);
+                }}>Edit</button>
+                <button className="btn btn-danger" onClick={() => { 
+                    deleteContact(_id);
+                    clearCurrent();
+                }}>Delete</button>
             </div>
         </div>
     )
@@ -31,6 +36,8 @@ const ContactItem = ({contact, deleteContact}) => {
 ContactItem.propTypes = {
     contact: PropTypes.object.isRequired,
     deleteContact: PropTypes.func.isRequired,
+    clearCurrent: PropTypes.func.isRequired,
+    setCurrent: PropTypes.func.isRequired,
 }
 
-export default connect(null, {deleteContact})(ContactItem)
+export default connect(null, {deleteContact, clearCurrent, setCurrent})(ContactItem)
