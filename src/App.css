@@ -32,6 +32,8 @@ a {
 }
 .contact-text-section {
   width: 100%;
+  margin-top: 2%;
+  margin-bottom: 2%;
 }
 @media screen and (max-width: 768px) {
   .contact-image-section {
