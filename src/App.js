@@ -7,14 +7,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from 'react-redux';
 import Store from './Store';
-import SetAuthToken from './utils/SetAuthToken';
 import { loadUser } from './actions/authAction';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
-
-if (localStorage.getItem("token")) {
-	SetAuthToken(localStorage.getItem("token"));
-}
+import UpdateContactForm from './components/contact/UpdateContactForm';
 
 const App = () => {
   useEffect(() => {
@@ -30,6 +26,7 @@ const App = () => {
           <Route path="/Signin" exact component={Signin} />
           <Route path="/Signup" exact component={Signup} />
           <PrivateRoute path="/Dashboard" exact component={Dashboard} />
+          <PrivateRoute path="/UpdateContact" exact component={UpdateContactForm} />
         </Switch>
         </Provider>
       </Router>

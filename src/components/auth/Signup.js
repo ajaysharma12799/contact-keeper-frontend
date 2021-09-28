@@ -2,10 +2,9 @@ import React, {useState} from 'react'
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authAction';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-const Signup = ({registerUser}) => {
-    let history = useHistory();
+const Signup = ({registerUser, auth}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,13 +16,16 @@ const Signup = ({registerUser}) => {
             console.log({name, email, password})
             registerUser({name, email, password});
             alert("User Added Successfully");
-            history.push("/Dashboard");
             console.log("Push End");
         }
         else {
             alert("Password Do Not Match");
         }
     }  
+
+    if(auth.isAuthenticated) {
+        return <Redirect to="/Dashboard" />
+    }
 
     return (
         <form className="container mt-5">
@@ -46,6 +48,11 @@ const Signup = ({registerUser}) => {
 
 Signup.propTypes = {
     registerUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
-export default connect(null, {registerUser})(Signup)
+const mapStateToProp = (state) => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProp, {registerUser})(Signup)

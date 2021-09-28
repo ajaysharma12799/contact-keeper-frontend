@@ -23,7 +23,6 @@ export default function(state = initialState, action) {
             };
         
         case LOAD_USER:
-            console.log(`${JSON.stringify(payload)}   payload from loaduser`);
             return {
                 ...state,
                 user: payload,

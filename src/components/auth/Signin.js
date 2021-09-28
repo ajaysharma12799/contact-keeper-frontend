@@ -1,21 +1,22 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authAction';
 
-
-const Signin = ({loginUser}) => {
-    let history = useHistory();
+const Signin = ({loginUser, auth}) => {
     const [email, setEmail] = useState("a@gmail.com");
     const [password, setPassword] = useState("123456");
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log({email, password})
         loginUser({email, password});
-        history.push("/Dashboard");
+        console.log(auth.isAuthenticated);
         alert("User LoggedIn Successfully");
+    }
+
+    if(auth.isAuthenticated) {
+        return <Redirect to="/Dashboard" />
     }
 
     return (
@@ -33,8 +34,11 @@ const Signin = ({loginUser}) => {
 
 Signin.propTypes = {
     loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
 }
 
-export default connect(null, {loginUser})(Signin)
+const mapStateToProp = (state) => ({
+    auth: state.auth
+});
 
-// {"token":null,"isAuthenticated":false,"user":null,"loading":false}
+export default connect(mapStateToProp, {loginUser})(Signin)
