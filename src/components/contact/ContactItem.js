@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { clearCurrent, deleteContact, setCurrent } from '../../actions/contactAction';
+import { setAlert } from '../../actions/AlertAction';
 
-const ContactItem = ({contact, deleteContact, clearCurrent, setCurrent}) => {
+const ContactItem = ({setAlert, contact, deleteContact, clearCurrent, setCurrent}) => {
     const {name, email, phone, type, _id} = contact
     return (
         <div className={type === "Professional" ? "card mb-2 bg-warning " : "card mb-2 bg-primary"}>
@@ -27,6 +28,7 @@ const ContactItem = ({contact, deleteContact, clearCurrent, setCurrent}) => {
                 <button className="btn btn-danger btn-lg" onClick={() => { 
                     deleteContact(_id);
                     clearCurrent();
+                    setAlert("Contact Deleted Successfully", "success");
                 }}>Delete</button>
             </div>
         </div>
@@ -38,6 +40,7 @@ ContactItem.propTypes = {
     deleteContact: PropTypes.func.isRequired,
     clearCurrent: PropTypes.func.isRequired,
     setCurrent: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
-export default connect(null, {deleteContact, clearCurrent, setCurrent})(ContactItem)
+export default connect(null, {setAlert, deleteContact, clearCurrent, setCurrent})(ContactItem)

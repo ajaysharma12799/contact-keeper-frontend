@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import { addContact, updateContact } from '../../actions/contactAction';
+import { setAlert } from '../../actions/AlertAction';
 
-const ContactForm = ({addContact, updateContact, contact: {current}}) => {
+const ContactForm = ({setAlert, addContact, updateContact, contact: {current}}) => {
     const [id, setID] = useState("");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -31,15 +32,22 @@ const ContactForm = ({addContact, updateContact, contact: {current}}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(current === null) {
-            console.log({name, email, phone, type});
             addContact({name, email, phone, type});
-            alert("Contact Added Successfully");
+            setAlert("Contact Added Successfully", "success");
+            setName("");
+            setEmail("");
+            setPhone("");
+            setType("");
+            setID("");
         }
         else {
-            console.log({name, email, phone, type});
             updateContact({name, email, phone, type, id});
-            console.log({name, email, phone, type, id});
-            alert("Contact Updated Successfully");
+            setAlert("Contact Updated Successfully", "success");
+            setName("");
+            setEmail("");
+            setPhone("");
+            setType("");
+            setID("");
         }
     }
 
@@ -79,10 +87,11 @@ ContactForm.propTypes = {
     addContact: PropTypes.func.isRequired,
     updateContact: PropTypes.func.isRequired,
     contact: PropTypes.object.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProp = (state) => ({
     contact: state.contact
 })
 
-export default connect(mapStateToProp, {addContact, updateContact})(ContactForm)
+export default connect(mapStateToProp, {setAlert, addContact, updateContact})(ContactForm)

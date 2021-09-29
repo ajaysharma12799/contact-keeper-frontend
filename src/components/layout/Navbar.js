@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { logout } from '../../actions/authAction';
+import { clearContacts } from '../../actions/contactAction';
 
-const Navbar = ({title, logout, auth: {isAuthenticated, user}}) => {
+const Navbar = ({clearContacts, title, logout, auth: {isAuthenticated, user}}) => {
     const [clicked, setClicked] = useState(false);
     let history = useHistory();
 
@@ -20,6 +21,7 @@ const Navbar = ({title, logout, auth: {isAuthenticated, user}}) => {
                 <button className="btn btn-danger" onClick={() => {
                     handleLogout();
                     history.push("/");
+                    clearContacts();
                 }} >Signout</button>
             </li>
         </Fragment>
@@ -57,6 +59,7 @@ Navbar.propTypes = {
     title: PropTypes.string.isRequired,
     logout: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    clearContacts: PropTypes.func.isRequired,
 }
 
 Navbar.defaultProps = {
@@ -67,5 +70,5 @@ const mapStateToProp = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProp, {logout})(Navbar)
+export default connect(mapStateToProp, {logout, clearContacts})(Navbar)
 

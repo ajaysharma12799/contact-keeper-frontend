@@ -1,4 +1,4 @@
-import {GET_ALL_CONTACTS, CONTACT_ERROR, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT} from "../actions/types";
+import {GET_ALL_CONTACTS, CONTACT_ERROR, ADD_CONTACT, DELETE_CONTACT, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, CLEAR_CONTACTS} from "../actions/types";
 
 const initialState = {
     contacts: null,
@@ -14,7 +14,6 @@ export default function(state = initialState, action) {
 
     switch (type) {
         case GET_ALL_CONTACTS:
-            console.log(`${JSON.stringify(payload)}`);
             return {
                 ...state,
                 contacts: payload,
@@ -30,7 +29,6 @@ export default function(state = initialState, action) {
             };
         
         case DELETE_CONTACT:
-            console.log(payload);
             return {
                 ...state,
                 contacts: state.contacts.filter(contact => contact._id !== payload),
@@ -42,6 +40,15 @@ export default function(state = initialState, action) {
                 ...state,
                 contact: state.contacts.map(contact => contact._id === payload._id ? payload : contact),
                 loading: false
+            };
+
+        case CLEAR_CONTACTS: 
+            return {
+                ...state,
+                contacts: null,
+                loading: false,
+                contact: null,
+                current: null
             };
         
         case SET_CURRENT: 

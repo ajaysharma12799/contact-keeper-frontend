@@ -12,7 +12,6 @@ const Signin = ({loginUser, auth}) => {
         event.preventDefault();
         loginUser({email, password});
         console.log(auth.isAuthenticated);
-        alert("User LoggedIn Successfully");
     }
 
     if(auth.isAuthenticated) {

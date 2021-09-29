@@ -10,6 +10,7 @@ import Store from './Store';
 import { loadUser } from './actions/authAction';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
+import Alert from './components/layout/Alert';
 
 const App = () => {
   useEffect(() => {
@@ -20,6 +21,7 @@ const App = () => {
       <Router>
         <Provider store={Store}>
         <Navbar />
+        <Alert />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/Signin" exact component={Signin} />

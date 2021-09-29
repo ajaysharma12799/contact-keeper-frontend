@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authAction';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { setAlert } from '../../actions/AlertAction';
 
-const Signup = ({registerUser, auth}) => {
+const Signup = ({registerUser, auth, setAlert}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,11 +16,9 @@ const Signup = ({registerUser, auth}) => {
         if(password === confirmPassword) {
             console.log({name, email, password})
             registerUser({name, email, password});
-            alert("User Added Successfully");
-            console.log("Push End");
         }
         else {
-            alert("Password Do Not Match");
+            setAlert("Password don't Match", "danger");
         }
     }  
 
@@ -55,10 +54,11 @@ const Signup = ({registerUser, auth}) => {
 Signup.propTypes = {
     registerUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    setAlert: PropTypes.func.isRequired,
 }
 
 const mapStateToProp = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProp, {registerUser})(Signup)
+export default connect(mapStateToProp, {registerUser, setAlert})(Signup)
